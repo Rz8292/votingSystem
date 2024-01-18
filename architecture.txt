@@ -1,0 +1,65 @@
+# Voting System API Design
+
+## Overview
+The Voting System API is a simple Spring Boot application that allows users to manage candidates, cast votes, and retrieve voting-related information. The application uses in-memory storage (a local map) to store candidate data.
+
+## Components
+
+### Candidate Class
+- The `Candidate` class represents a candidate with a name and a vote count.
+- Lombok's `@Data` annotation is used for automatic generation of getter, setter, and other boilerplate code.
+
+### CandidateService Class
+- The `CandidateService` class is a service component responsible for managing candidate-related operations.
+- It uses a `HashMap` to store candidate data in-memory.
+
+#### Methods
+1. `enterCandidate(String name)`: Adds a new candidate with the specified name and initializes the vote count to 0.
+
+2. `castVote(String name)`: Increments the vote count for the specified candidate.
+
+3. `countVote(String name)`: Returns the vote count for the specified candidate.
+
+4. `listVote()`: Returns a map containing all candidates and their respective vote counts.
+
+5. `getWinner()`: Returns the name of the candidate with the highest vote count.
+
+### VoteController Class
+- The `VoteController` class is a Spring MVC controller that handles incoming HTTP requests related to voting.
+
+#### Endpoints
+1. `/entercandidate`: Adds a new candidate.
+   - Method: GET
+   - Parameters: `name` (Candidate name)
+   - Response: None
+
+2. `/castvote`: Casts a vote for a candidate.
+   - Method: GET
+   - Parameters: `name` (Candidate name)
+   - Response: Integer (Updated vote count)
+
+3. `/countvote`: Retrieves the vote count for a candidate.
+   - Method: GET
+   - Parameters: `name` (Candidate name)
+   - Response: Integer (Vote count)
+
+4. `/listvote`: Retrieves a map containing all candidates and their vote counts.
+   - Method: GET
+   - Response: JSON Map
+
+5. `/getwinner`: Retrieves the name of the candidate with the highest vote count.
+   - Method: GET
+   - Response: String (Winner's name)
+
+## Usage
+Example API usage:
+- `http://localhost:8080/entercandidate?name=ajay`
+- `http://localhost:8080/castvote?name=ajay`
+- `http://localhost:8080/countvote?name=ajay`
+- `http://localhost:8080/listvote`
+- `http://localhost:8080/getwinner`
+
+## Notes
+- The application uses in-memory storage, and all data is lost when the application is restarted.
+- Unit tests should be implemented to ensure the functionality of the CandidateService and VoteController.
+
